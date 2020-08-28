@@ -31,7 +31,7 @@ class FindForm extends Component {
 
     doAction(e){
         e.preventDefault();
-        let action = findMemo(this.state.find);
+        let action = findMemo(this.props.data,this.state.find);
         this.props.dispatch(action);
     }
 

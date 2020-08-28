@@ -50,18 +50,11 @@ function addReduce(state, action){
 
 // メモ検索のレデュース処理
 function findReduce(state, action){
-    let f = action.find;
-    let fdata = [];
-    state.data.forEach((value)=>{
-        if (value.message.indexOf(f) >= 0){
-            fdata.push(value);
-        }
-    });
     return {
         data:state.data,
-        message:'find "' + f + '":',
+        message:'find "' + action.text + '":',
         mode:'find',
-        fdata:fdata
+        fdata:action.fdata
     };
 }
 
@@ -96,10 +89,17 @@ export function deleteMemo(num) {
 }
 
 // メモ検索のアクション
-export function findMemo(text) {
+export function findMemo(data, text) {
+    let fdata = [];
+    data.forEach((value)=>{
+        if (value.message.indexOf(text) >= 0){
+            fdata.push(value);
+        }
+    });
     return {
         type: 'FIND',
-        find:text
+        text: text,
+        fdata: fdata
     }
 }
 
