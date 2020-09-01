@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { findMemo } from './Store';
+import { FindAsync } from './Store';
 
 class FindForm extends Component {
     input = {
@@ -31,8 +31,21 @@ class FindForm extends Component {
 
     doAction(e){
         e.preventDefault();
-        let action = findMemo(this.props.data,this.state.find);
-        this.props.dispatch(action);
+        // 呼び出し
+        FindAsync(this.props.data, this.state.find).then(
+            // 成功処理の定義
+            (fdata) => {
+                this.props.dispatch({
+                    type: 'FIND',
+                    text: this.state.find,
+                    fdata: fdata
+                });
+            },
+            // 失敗処理の定義
+            error => {
+                console.log(`Error:${error}`);
+            }
+        )
     }
 
     render(){

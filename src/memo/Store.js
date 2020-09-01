@@ -31,12 +31,12 @@ export function memoReducer(state = initData, action) {
 
 // メモ追加のレデュース処理
 function addReduce(state, action){
-    let d = new Date();
+    let d = new Date();// 時間を取得
     let f = d.getHours() + ':' + d.getMinutes()
-        + ':' + d.getSeconds();
+        + ':' + d.getSeconds();// 表示用に変換
     let data = {
-        message:action.message,
-        created:f
+        message:action.message,// 保存するメモ内容
+        created:f// 追加した時間
     };
     let newdata = state.data.slice();// 配列の作り直し
     newdata.unshift(data);// 配列の先頭に追加
@@ -103,5 +103,47 @@ export function findMemo(data, text) {
     }
 }
 
+// 非同期処理
+// Promiseの定義
+export function FindAsync(data, text) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            // 検索処理
+            let fdata = [];
+            data.forEach((value)=>{
+                if (value.message.indexOf(text) >= 0){
+                    fdata.push(value);
+                }
+            });
+            if(fdata.length !== 0){
+                // 成功処理の呼び出し
+                resolve(fdata);
+            }
+            else{
+                // 失敗処理の呼び出し
+                reject('Not Found');
+            }
+        }, 5000)
+    });
+}
+
+// export function FindAsyncCreater(data,text){
+//     // 呼び出し
+//     FindAsync(data, text).then(
+//         // 成功処理の定義
+//         (fdata) => {
+//             return {
+//                 type: 'FIND',
+//                 text: text,
+//                 fdata: fdata
+//             }
+//         },
+//         // 失敗処理の定義
+//         error => {
+//             console.log(`Error:${error}`);
+//         }
+//     )
+// }
+  
 // ストアを作成
 export default createStore(memoReducer);
