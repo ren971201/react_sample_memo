@@ -44,8 +44,26 @@ class FindForm extends Component {
             // 失敗処理の定義
             error => {
                 console.log(`Error:${error}`);
+                return{
+                    type: 'ERROR',
+                }
             }
         )
+        // // 呼び出し
+        // FindAsync(this.props.data, this.state.find).then(
+        //     // 成功処理の定義
+        //     (fdata) => {
+        //         this.props.dispatch({
+        //             type: 'FIND',
+        //             text: this.state.find,
+        //             fdata: fdata
+        //         });
+        //     },
+        //     // 失敗処理の定義
+        //     error => {
+        //         console.log(`Error:${error}`);
+        //     }
+        // )
     }
 
     render(){

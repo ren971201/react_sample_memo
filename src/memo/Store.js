@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 // 初期のデータ
 const initData = {
@@ -144,6 +145,6 @@ export function FindAsync(data, text) {
 //         }
 //     )
 // }
-  
+
 // ストアを作成
-export default createStore(memoReducer);
+export default createStore(memoReducer, applyMiddleware(thunk));
